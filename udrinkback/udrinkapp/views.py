@@ -133,29 +133,29 @@ def cocktail_retrieve_update_delete(request, id):
 def ingredients_cocktails_list_create(request):
     if request.method == 'GET':
         ingredients_cocktails = Ingredients_Cocktails.objects.all()
-        data = {'results': list(ingredients_cocktails.values('Cocktails', 'Ingredients', 'quantite', 'unite'))}
+        data = {'results': list(ingredients_cocktails.values('cocktails', 'ingredients', 'quantite', 'unite'))}
         return JsonResponse(data)
 
     elif request.method == 'POST':
         payload = json.loads(request.body)
-        Cocktails = payload.get('Cocktails')
-        Ingredients = payload.get('Ingredients')
+        cocktails = payload.get('cocktails')
+        ingredients = payload.get('ingredients')
         quantite = payload.get('quantite')
         unite = payload.get('unite')
 
         try:
-            cocktail = Cocktails.objects.get(id=Cocktails)
+            cocktail = Cocktails.objects.get(id=cocktails)
         except Cocktails.DoesNotExist:
-            data = {'message': f"Le cocktail avec l'id {Cocktails} n'existe pas!"}
+            data = {'message': f"Le cocktail avec l'id {cocktails} n'existe pas!"}
             return JsonResponse(data, status=404)
 
         try:
-            ingredient = Ingredient.objects.get(id=Ingredients)
+            ingredient = Ingredients.objects.get(id=ingredients)
         except Ingredients.DoesNotExist:
-            data = {'message': f"L'ingredient avec l'id {Ingredients} n'existe pas!"}
+            data = {'message': f"L'ingredient avec l'id {ingredients} n'existe pas!"}
             return JsonResponse(data, status=404)
 
-        ingredient_cocktail = Ingredients_Cocktails(Cocktails=cocktail, Ingredients=ingredient, quantite=quantite, unite=unite)
+        ingredient_cocktail = Ingredients_Cocktails(cocktails=cocktail, ingredients=ingredient, quantite=quantite, unite=unite)
         ingredient_cocktail.save()
 
         data = {'message': f"La relation entre le cocktail '{cocktail.nom}' et l'ingredient '{ingredient.nom}' a été créée avec succès!"}
@@ -163,17 +163,19 @@ def ingredients_cocktails_list_create(request):
 
 
 @csrf_exempt
-def ingredient_cocktail_retrieve_update_delete(request, Cocktails, Ingredients):
+def ingredient_cocktail_retrieve_update_delete(request, id):
     try:
-        ingredient_cocktail = Ingredients_Cocktails.objects.get(Cocktails=Cocktails, Ingredients=Ingredients)
+        ingredient_cocktail = Ingredients_Cocktails.objects.get(id = id)
+        cocktails = ingredient_cocktail.cocktails
+        ingredients = ingredient_cocktail.ingredients
     except Ingredients_Cocktails.DoesNotExist:
-        data = {'message': f"La relation entre le cocktail avec l'id {Cocktails} et l'ingredient avec l'id {Ingredients} n'existe pas!"}
+        data = {'message': f"La relation entre le cocktail avec l'id {cocktails} et l'ingredient avec l'id {ingredients} n'existe pas!"}
         return JsonResponse(data, status=404)
 
     if request.method == 'GET':
         data = {
-            'Cocktails': ingredient_cocktail.Cocktails.id,
-            'Ingredients': ingredient_cocktail.Ingredients.id,
+            'cocktails': ingredient_cocktail.cocktails.id,
+            'ingredients': ingredient_cocktail.ingredients.id,
             'quantite': ingredient_cocktail.quantite,
             'unite': ingredient_cocktail.unite
         }
@@ -184,14 +186,16 @@ def ingredient_cocktail_retrieve_update_delete(request, Cocktails, Ingredients):
         quantite = payload.get('quantite')
         unite = payload.get('unite')
 
+        ingredient_cocktail.cocktails = cocktails
+        ingredient_cocktail.ingredients = ingredients
         ingredient_cocktail.quantite = quantite
         ingredient_cocktail.unite = unite
         ingredient_cocktail.save()
 
-        data = {'message': f"La relation entre le cocktail avec l'id {Cocktails} et l'ingredient avec l'id {Ingredients} a été mise à jour avec succès!"}
+        data = {'message': f"La relation entre le cocktail avec l'id {cocktails} et l'ingredient avec l'id {ingredients} a été mise à jour avec succès!"}
         return JsonResponse(data)
 
     elif request.method == 'DELETE':
         ingredient_cocktail.delete()
-        data = {'message': f"La relation entre le cocktail avec l'id {Cocktails} et l'ingredient avec l'id {Ingredients} a été supprimée avec succès!"}
+        data = {'message': f"La relation entre le cocktail avec l'id {cocktails} et l'ingredient avec l'id {ingredients} a été supprimée avec succès!"}
         return JsonResponse(data, status=204)

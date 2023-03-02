@@ -20,10 +20,13 @@ class Cocktails(models.Model):
         return self.nom
 
 class Ingredients_Cocktails(models.Model):
-    Cocktails = models.ForeignKey(Cocktails, on_delete=models.CASCADE)
-    Ingredients = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
+    cocktails = models.ForeignKey(Cocktails, on_delete=models.CASCADE)
+    ingredients = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
     quantite = models.IntegerField()
     unite = models.CharField(max_length=255)
+    
+    class Meta:
+        unique_together = (("cocktails", "ingredients"))
 
     def __str__(self):
         return f"{self.id_Cocktails.nom} - {self.id_Ingredients.nom}"
