@@ -1,9 +1,18 @@
 <template>
   <NavBar />
-  <LateralBar/>
-  <router-view />
+  <div class="container-fluid">
+    <div class="row">
+      <div class="col-3 px-0">
+        <LateralBar />
+      </div>
+      <div class="col-6">
+        <router-view />
+      </div>
+      <div class="col-3">
+      </div>
+    </div>
+  </div>
 </template>
-
 <script>
 import NavBar from './components/Navbar.vue'
 import LateralBar from './components/Lateralbar.vue'
@@ -31,4 +40,8 @@ nav a {
   text-decoration: none;
 }
 
+.textMenu{
+  color: #dce0d9;
+  text-decoration: none;
+}
 </style>
