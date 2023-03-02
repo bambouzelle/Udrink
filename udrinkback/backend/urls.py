@@ -13,4 +13,6 @@ urlpatterns = [
     # URLs pour Ingredients_Cocktails
     path('ingredients_cocktails/', views.ingredients_cocktails_list_create, name='ingredients_cocktails_list_create'),
     path('ingredients_cocktails/<int:id>/', views.ingredient_cocktail_retrieve_update_delete, name='ingredient_cocktail_retrieve_update_delete'),
+
+    path('cocktails/<int:cocktail_id>/ingredients/', views.ingredients_in_cocktails,name="ingredients_in_cocktails")
 ]

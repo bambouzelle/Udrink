@@ -1,6 +1,9 @@
 from django.http import JsonResponse 
 import json
+from django.shortcuts import get_object_or_404
+from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
+from django.core.serializers.json import DjangoJSONEncoder
 from .models import Ingredients, Cocktails, Ingredients_Cocktails
 
 
@@ -199,3 +202,10 @@ def ingredient_cocktail_retrieve_update_delete(request, id):
         ingredient_cocktail.delete()
         data = {'message': f"La relation entre le cocktail avec l'id {cocktails} et l'ingredient avec l'id {ingredients} a été supprimée avec succès!"}
         return JsonResponse(data, status=204)
+
+
+def ingredients_in_cocktails(request, cocktail_id):
+    cocktail = get_object_or_404(Cocktails, pk=cocktail_id)
+    ingredients = Ingredients.objects.filter(ingredients_cocktails__cocktails_id=cocktail.id).values()
+    data = {'cocktail': cocktail.nom, 'ingredients': list(ingredients)}
+    return JsonResponse(data)
