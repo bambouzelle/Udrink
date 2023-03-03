@@ -3,6 +3,7 @@ import Cocktails from '../views/Cocktails.vue'
 import CocktailMaker from '../views/CocktailMaker.vue'
 import Ingredients from '../views/Ingredients.vue'
 import Profil from '../views/Profil.vue'
+import Login from '../views/Login.vue'
 
 
 
@@ -26,6 +27,11 @@ const routes = [
     path: '/profil',
     name: 'profil',
     component: Profil
+  },
+    {
+    path: '/login',
+    name: 'login',
+    component: Login
   },
 ]
 
