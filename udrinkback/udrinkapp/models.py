@@ -33,14 +33,15 @@ class Ingredients_Cocktails(models.Model):
 
 class Commentaires(models.Model):
     cocktails = models.ForeignKey(Cocktails, on_delete=models.CASCADE)
-    personne = models.IntegerField()
+    personne_id = models.IntegerField()
+    nom = models.CharField(max_length=255)
     note = models.IntegerField()
     avis = models.TextField()
 
 class Favoris(models.Model):
     cocktails = models.ForeignKey(Cocktails, on_delete=models.CASCADE)
-    personne = models.IntegerField()
+    personne_id = models.IntegerField()
 
 class Ingredients_Personne(models.Model):
     ingredients = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
-    personne = models.IntegerField()
+    personne_id = models.IntegerField()
