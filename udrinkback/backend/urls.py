@@ -14,5 +14,11 @@ urlpatterns = [
     path('ingredients_cocktails/', views.ingredients_cocktails_list_create, name='ingredients_cocktails_list_create'),
     path('ingredients_cocktails/<int:id>/', views.ingredient_cocktail_retrieve_update_delete, name='ingredient_cocktail_retrieve_update_delete'),
 
-    path('cocktails/<int:cocktail_id>/ingredients/', views.ingredients_in_cocktails,name="ingredients_in_cocktails")
+    path('ingredients/<int:ingredients_id>/cocktails/', views.cocktails_in_ingredients,name="cocktails_in_ingredients"),
+    path('cocktails/<int:cocktails_id>/ingredients/', views.ingredients_in_cocktails,name="ingredients_in_cocktails"),
+
+    #TODO
+    #path('personne/<int:personne_id>/favoris/', views.favoris_in_personne,name="favoris_in_personne")
+    #path('personne/<int:personne_id>/ingredients/', views.ingredients_in_personne,name="ingredients_in_personne")
+    path('cocktails/<int:cocktail_id>/commentaires/', views.commentaires_in_cocktails,name="commentaires_in_cocktails")
 ]

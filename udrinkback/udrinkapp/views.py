@@ -4,7 +4,7 @@ from django.shortcuts import get_object_or_404
 from django.core import serializers
 from django.views.decorators.csrf import csrf_exempt
 from django.core.serializers.json import DjangoJSONEncoder
-from .models import Ingredients, Cocktails, Ingredients_Cocktails
+from .models import Ingredients, Cocktails, Ingredients_Cocktails, Commentaires, Favoris,Ingredients_Personne
 
 
 @csrf_exempt
@@ -204,8 +204,52 @@ def ingredient_cocktail_retrieve_update_delete(request, id):
         return JsonResponse(data, status=204)
 
 
-def ingredients_in_cocktails(request, cocktail_id):
-    cocktail = get_object_or_404(Cocktails, pk=cocktail_id)
-    ingredients = Ingredients.objects.filter(ingredients_cocktails__cocktails_id=cocktail.id).values()
-    data = {'cocktail': cocktail.nom, 'ingredients': list(ingredients)}
+def ingredients_in_cocktails(request, cocktails_id):
+    cocktails = get_object_or_404(Cocktails, pk=cocktails_id)
+    ingredients = Ingredients.objects.filter(ingredients_cocktails__cocktails_id=cocktails.id).values()
+    data = {'cocktail': cocktails.nom, 'ingredients': list(ingredients)}
     return JsonResponse(data)
+
+def cocktails_in_ingredients(request, ingredients_id):
+    ingredients = get_object_or_404(Ingredients, pk=ingredients_id)
+    cocktails = Cocktails.objects.filter(ingredients_cocktails__ingredients_id=ingredients.id).values()
+    data = {'ingredient': ingredients.nom, 'cocktail': list(cocktails)}
+    return JsonResponse(data)
+
+#def favoris_in_personne(request, personne_id):
+
+#def ingredients_in_personne(request, personne_id):
+
+def commentaires_in_cocktails(request, cocktails_id):
+    if request.method == 'GET':
+
+        cocktails = get_object_or_404(Cocktails, pk=cocktails_id)
+        commentaires = Commentaires.objects.filter(cocktails_id=cocktails.id).values()
+        data = {'cocktail': cocktails.nom, 'commentaires': list(commentaires)}
+        return JsonResponse(data)
+
+    elif request.method == 'POST':
+        
+        payload = json.loads(request.body)
+        note = payload.get('note')
+        avis = payload.get('avis')
+
+        try:
+            cocktail = Cocktails.objects.get(id=cocktails)
+        except Cocktails.DoesNotExist:
+            data = {'message': f"Le cocktail avec l'id {cocktails} n'existe pas!"}
+            return JsonResponse(data, status=404)
+
+        try:
+            commentaire = Ingredients.objects.get(id=commentaires)
+        except Ingredients.DoesNotExist:
+            data = {'message': f"Le commentaire  avec l'id {commentaires} n'existe pas!"}
+            return JsonResponse(data, status=404)
+
+        commentaires_in_cocktails = Ingredients_Cocktails(cocktails=cocktail, commentaires=commentaire, note=note, avis=avis)
+        commentaires_in_cocktails.save()
+
+        data = {'message': f"La relation entre le cocktail '{cocktail.nom}' et le commentaire '{commentaire.nom}' a été créée avec succès!"}
+        return JsonResponse(data, status=201)
+
+

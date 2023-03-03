@@ -30,3 +30,17 @@ class Ingredients_Cocktails(models.Model):
 
     def __str__(self):
         return f"{self.id_Cocktails.nom} - {self.id_Ingredients.nom}"
+
+class Commentaires(models.Model):
+    cocktails = models.ForeignKey(Cocktails, on_delete=models.CASCADE)
+    personne = models.IntegerField()
+    note = models.IntegerField()
+    avis = models.TextField()
+
+class Favoris(models.Model):
+    cocktails = models.ForeignKey(Cocktails, on_delete=models.CASCADE)
+    personne = models.IntegerField()
+
+class Ingredients_Personne(models.Model):
+    ingredients = models.ForeignKey(Ingredients, on_delete=models.CASCADE)
+    personne = models.IntegerField()
