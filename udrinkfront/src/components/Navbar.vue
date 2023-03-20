@@ -1,7 +1,7 @@
 <!-- eslint-disable vue/multi-word-component-names -->
 <template>
   <nav id="navBar" class="navbar navbar-dark bg-dark">
-    <div  class='container-fluid'>
+    <div class='container-fluid'>
       <div class="row wide">
         <div class="col-1">
           <router-link class="navbar-brand" to="/">LOGO</router-link>
@@ -24,13 +24,29 @@
             <div>Mes ingrédients</div>
           </router-link>
         </div>
-        <div class="col-2" style="text-align: right;">
-          <router-link to="/login">
-            <div> <img src="../assets/profil/profil2.svg" class="navbarIcon"></div>
-            <div>Profil</div>
-          </router-link>
+
+        <div class="col-3 text-end" v-if="!$auth0.loading">
+        <!--<div class="col-2" style="text-align: right;" v-if="$auth0.isAuthenticated" @click="logout">
+            <router-link to="/login">
+              <div> <img src="../assets/profil/profil2.svg" class="navbarIcon"></div>
+              <div>Profil</div>
+            </router-link>
+          </div>
+          <div class="col-2" style="text-align: right;" v-if="!$auth0.isAuthenticated" @click="login">
+            <router-link to="/login">
+              <div> <img src="../assets/profil/profil2.svg" class="navbarIcon"></div>
+              <div>Profil</div>
+              </router-link>-->
+          <div v-if="!$auth0.loading">
+
+            <a v-if="!$auth0.isAuthenticated" @click="login">Log in</a>
+
+            <a v-if="$auth0.isAuthenticated" @click="logout">Log out</a>
+          </div>
         </div>
       </div>
+
+      <!--</div>-->
     </div>
   </nav>
 </template>
@@ -38,6 +54,17 @@
 <script>
 export default {
   name: "NavBar",
+  methods: {
+    login() {
+      this.$auth0.loginWithRedirect();
+    },
+    // Log the user out
+    logout() {
+      this.$auth0.logout({
+        returnTo: window.location.origin
+      });
+    }
+  }
 };
 </script>
 
@@ -50,10 +77,11 @@ export default {
   width: 200%;
 }
 
-.bg-dark{
+.bg-dark {
   background-color: var(--main-black) !important;
 }
-#navBar{
-    box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
+
+#navBar {
+  box-shadow: rgba(0, 0, 0, 0.25) 0px 14px 28px, rgba(0, 0, 0, 0.22) 0px 10px 10px;
 }
 </style>
