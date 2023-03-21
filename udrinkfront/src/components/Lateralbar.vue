@@ -42,11 +42,6 @@ export default {
 	created() {
 		this.lateralBarShowed = false
 	},
-	mounted() {
-		console.log(this.barHeight)
-		var lateralBar = document.getElementById("lateralBar")
-		lateralBar.style.height = this.barHeight + "px";
-	},
 	methods: {
 		toggleLateralBar() {
 			this.lateralBarShowed = !this.lateralBarShowed
