@@ -4,13 +4,6 @@
 			<h5 class="card-header">{{ cocktail.title }}</h5>
 		</div>
 		<div class="row g-0">
-			<!--<div class="col-md-4">
-				<div class="card px-0 rounded-0">
-					<img src="../assets/cocktailPNG37.png" class="img-fluid rounded-start" alt="..."
-						style="max-height: 2em;">
-				</div>
-
-			</div>-->
 			<div class="col-md-9">
 				<div class="card px-0 border-top-0 border-start-0 border-bottom-0 rounded-0">
 					<div class="card-body">
@@ -23,7 +16,7 @@
 			<div class="col-md-3">
 				<div class="card px-0 rounded-0 border-0">
 					<div class="card-body">
-						<img :src="String(glassMap[cocktail.glass])">
+						<img :src="(link)" style="max-height: 3em;">
 					</div>
 				</div>
 			</div>
@@ -32,19 +25,31 @@
 </template>
 
 <script>
+import cocktailGlass from "@/assets/glasses/cocktailGlass.svg";
+import wineGlass from "@/assets/glasses/wineGlass.svg";
+import whiskeyGlass from "@/assets/glasses/whiskeyGlass.svg";
+import shotGlass from "@/assets/glasses/shotGlass.svg";
+import beerGlass from "@/assets/glasses/beerGlass.svg";
+
+
 export default {
 	name:"CocktailCard",
 	props:["cocktail"],
 	data(){
 		return {
 			glassMap:{
-				coupe:"../assets/glasses/cocktailGlass.svg",
-				ballon:".../assets/glasses/wineGlass.svg",
-				whiskey:"../assets/glasses/whiskeyGlass.svg",
-				shooter:"../assets/glasses/shotGlass.svg",
-				biere:"../assets/glasses/beerGlass.svg"
+				coupe:cocktailGlass,
+				ballon:wineGlass,
+				whiskey:whiskeyGlass,
+				shooter:shotGlass,
+				biere:beerGlass
 			}
 		}	
+	},
+	computed: {
+		link(){
+				return (this.glassMap[this.cocktail.glass])
+		}
 	}
 }
 </script>

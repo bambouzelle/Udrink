@@ -4,7 +4,14 @@
 		<Transition name="slide" id="panel">
 			<div v-if="lateralBarShowed" class="lateralBar panelGrid">
 				<div id="titrePanel" class="textMenu">Mes ingrédients</div>
-				<div id="contentPanel" class="textMenu"> pas d'ingrédients !</div>
+				<div id="contentPanel" class="textMenu"> 
+					<p v-show="$store.state.listeIngredients.length == 0">pas d'ingrédients !</p>
+					<ul v-show="$store.state.listeIngredients.length != 0">
+						<li v-for="ingredient in $store.state.listeIngredients" :key="ingredient.name"> {{ ingredient.name }} </li>
+					</ul>
+				</div>
+				
+
 			</div>
 		</Transition>
 
@@ -105,6 +112,7 @@ export default {
 	border-end-end-radius: 55%;
 	transition: all 0.3s ease-in-out;
 	width: 46px;
+	height : 48px;
 }
 
 .lateralBar {

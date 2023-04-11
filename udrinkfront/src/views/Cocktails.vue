@@ -23,7 +23,10 @@ export default {
 		return {
 			data: [
 				{ id: 1, title: "Cocktail1", ingredients: ["I1", "I2"], description: "HOW TO DO IT", glass: "coupe" },
-				{ id: 1, title: "Cocktail2", ingredients: ["I1", "I2", "I3"], description: "HOW TO DO IT GOOF", glass: "ballon" }
+				{ id: 2, title: "Cocktail2", ingredients: ["I1", "I2", "I3"], description: "HOW TO DO IT GOOF", glass: "ballon" },
+				{ id: 3, title: "Cocktail3", ingredients: ["I1", "I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "whiskey" },
+				{ id: 4, title: "Cocktail3", ingredients: ["I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "shooter" },
+				{ id: 5, title: "Cocktail3", ingredients: ["I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "biere" }
 			]
 		}
 	}
