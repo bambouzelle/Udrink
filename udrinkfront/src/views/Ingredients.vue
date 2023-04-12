@@ -24,8 +24,7 @@ import AjouteurInput from '@/components/Ajouteur.vue';
 export default {
 	name: "IngredientsView",
 	created(){
-		console.log(this.$store.getters.all)
-	},
+		},
 	components:{SearchBar, IngredientCard, AjouteurInput},
 	data(){
 		return {

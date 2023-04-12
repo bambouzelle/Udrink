@@ -4,7 +4,7 @@
 
 <script>
 export default {
-name: "CocktailMakerView"
+  name: "CocktailMakerView",
 }
 </script>
 

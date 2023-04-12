@@ -77,7 +77,7 @@ export default {
 	display: grid;
 	grid-template-columns: 10fr 3fr;
 	grid-template-rows: 1fr 30fr;
-	width: 200%;
+	width: 50%;
 	z-index: 999;
 }
 

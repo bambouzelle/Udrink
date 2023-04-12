@@ -14,6 +14,11 @@ export default {
     NavBar,
     LateralBar
   },
+  mounted(){
+    let a = document.getElementById('navbar').getBoundingClientRect().height;
+    document.getElementById('navbar').style.height = a + "px";
+    document.getElementById('lateralBar').style.marginBlockStart = a + 'px';
+  }
 }
 </script>
 
@@ -34,17 +39,12 @@ export default {
 }
 
 #navbar{
-  grid-column-start: 1;
-  grid-column-end: 5;
-  grid-row-start: 1;
-  grid-row-end: 2;
+  position:absolute;
+  width: 100%;
 }
 
 #lateralBar{
-  grid-column-start: 1;
-  grid-column-end: 1;
-  grid-row-start: 2;
-  grid-row-end: 3;
+  position:fixed;
 }
 
 #centralZone{
