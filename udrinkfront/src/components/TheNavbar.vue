@@ -23,13 +23,10 @@
     </router-link>
 
 
-    <div v-if="!$auth0.loading" class="profil">
-      <div v-if="!$auth0.loading">
+    <div class="profil">
+        <a v-if="!authenticated" @click="login">Log in</a>
 
-        <a v-if="!$auth0.isAuthenticated" @click="login">Log in</a>
-
-        <a v-if="$auth0.isAuthenticated" @click="logout">Log out</a>
-      </div>
+        <a v-if="authenticated" @click="logout">Log out</a>
     </div>
   </nav>
 </template>
@@ -37,17 +34,6 @@
 <script>
 export default {
   name: "TheNavBar",
-  methods: {
-    login() {
-      this.$auth0.loginWithRedirect();
-    },
-    // Log the user out
-    logout() {
-      this.$auth0.logout({
-        returnTo: window.location.origin
-      });
-    }
-  }
 };
 </script>
 
