@@ -1,30 +1,68 @@
 <template>
-  <nav>
-    <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
-  </nav>
-  <router-view/>
+  <div id="page">
+        <NavBar id="navbar"/>
+        <LateralBar id="lateralBar"/>
+        <router-view  id="centralZone"/>
+  </div>
 </template>
+<script>
+import NavBar from './components/TheNavbar.vue'
+import LateralBar from './components/TheLateralBar.vue'
+
+export default {
+  components: {
+    NavBar,
+    LateralBar
+  },
+  mounted(){
+    let a = document.getElementById('navbar').getBoundingClientRect().height;
+    document.getElementById('navbar').style.height = a + "px";
+    document.getElementById('lateralBar').style.marginBlockStart = a + 'px';
+  }
+}
+</script>
 
 <style>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
+  font-family: "Golos Text", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
+  color: var(--main-black);
+  background-color:var(--main-white);
 }
 
-nav {
-  padding: 30px;
+#page{
+  display: grid;
+  grid-template-rows: 1fr 10fr;
+  grid-template-columns:  2fr 8fr 2fr;
+}
+
+#navbar{
+  position:absolute;
+  width: 100%;
+}
+
+#lateralBar{
+  position:fixed;
+}
+
+#centralZone{
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 2;
+  grid-column-end: 3;
 }
 
 nav a {
-  font-weight: bold;
-  color: #2c3e50;
+  padding: 30px;
+  color: var(--main-white);
+  text-decoration: none;
 }
 
-nav a.router-link-exact-active {
-  color: #42b983;
+.textMenu{
+  color: var(--main-white);
+  text-decoration: none;
 }
+
 </style>
