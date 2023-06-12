@@ -79,7 +79,7 @@ export default class AuthService {
   }
 
   // a method to get the User profile
-  getUserProfile (cb) {
+  getUserProfile () {
     return this.profile
   }
 }

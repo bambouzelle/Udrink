@@ -50,7 +50,11 @@ INSTALLED_APPS = [
     'rest_framework_jwt',
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_HEADERS = '*'
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -87,9 +91,9 @@ WSGI_APPLICATION = 'backend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'udrink',
-        'USER': 'root',
-        'PASSWORD': '',
+        'NAME': 'UDrink',
+        'USER': 'jonh',
+        'PASSWORD': 'jonh',
         'HOST': 'localhost',
         'PORT': '3306',
     }
@@ -149,7 +153,7 @@ REST_FRAMEWORK = {
 ),
 }
 
-AUTH0_DOMAIN = 'authudrink.uk.auth0.com'
+"""AUTH0_DOMAIN = 'authudrink.uk.auth0.com'
 API_IDENTIFIER = 'rjipTsJARDo6UfLfCc3VCJVzCjm5NZeO'
 PUBLIC_KEY = None
 JWT_ISSUER = None
@@ -174,4 +178,4 @@ JWT_AUTH = {
     'JWT_AUDIENCE': API_IDENTIFIER,
     'JWT_ISSUER': JWT_ISSUER,
     'JWT_AUTH_HEADER_PREFIX': 'Bearer',
-}
+}"""

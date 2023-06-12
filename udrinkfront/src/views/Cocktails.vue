@@ -17,6 +17,7 @@
 
 <script>
 import CocktailCard from "@/components/CocktailCard.vue"
+const API_URL = 'http://127.0.0.1:8000'
 
 export default {
 	components: { CocktailCard },
@@ -45,6 +46,7 @@ export default {
 		}
 	},
 	mounted(){
+		this.getApiData();
 		this.getMoreData();
 		this.getNextCocktails();
 	},
@@ -70,7 +72,23 @@ export default {
 					this.noMore = true
 				}
 			}
-		}
+		},
+		async getApiData () {
+      const url = `${API_URL}/cocktails`
+			var myHeaders = new Headers();
+			myHeaders.append("Access-Control-Allow-Origin", "*");
+
+			var requestOptions = {
+			method: 'GET',
+			headers: myHeaders,
+			redirect: 'follow'
+			};
+
+			fetch(url, requestOptions)
+			.then(response => response.text())
+			.then(result => console.log(result))
+			.catch(error => console.log('error', error));
+			}
 	}
 }
 </script>
