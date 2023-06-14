@@ -25,21 +25,6 @@ export default {
 	data() {
 		return {
 			data: [
-				{ id: 1, title: "Cocktail1", ingredients: ["I1", "I2"], description: "HOW TO DO IT", glass: "coupe" },
-				{ id: 2, title: "Cocktail2", ingredients: ["I1", "I2", "I3"], description: "HOW TO DO IT GOOF", glass: "ballon" },
-				{ id: 3, title: "Cocktail3", ingredients: ["I1", "I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "whiskey" },
-				{ id: 4, title: "Cocktail3", ingredients: ["I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "shooter" },
-				{ id: 5, title: "Cocktail3", ingredients: ["I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "biere" },
-				{ id: 1, title: "Cocktail1", ingredients: ["I1", "I2"], description: "HOW TO DO IT", glass: "coupe" },
-				{ id: 2, title: "Cocktail2", ingredients: ["I1", "I2", "I3"], description: "HOW TO DO IT GOOF", glass: "ballon" },
-				{ id: 3, title: "Cocktail3", ingredients: ["I1", "I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "whiskey" },
-				{ id: 4, title: "Cocktail3", ingredients: ["I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "shooter" },
-				{ id: 5, title: "Cocktail3", ingredients: ["I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "biere" },
-				{ id: 1, title: "Cocktail1", ingredients: ["I1", "I2"], description: "HOW TO DO IT", glass: "coupe" },
-				{ id: 2, title: "Cocktail2", ingredients: ["I1", "I2", "I3"], description: "HOW TO DO IT GOOF", glass: "ballon" },
-				{ id: 3, title: "Cocktail3", ingredients: ["I1", "I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "whiskey" },
-				{ id: 4, title: "Cocktail3", ingredients: ["I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "shooter" },
-				{ id: 5, title: "Cocktail3", ingredients: ["I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "biere" }
 			],
 			dataToShow:[],
 			noMore: false
@@ -47,8 +32,6 @@ export default {
 	},
 	mounted(){
 		this.getApiData();
-		this.getMoreData();
-		this.getNextCocktails();
 	},
 	methods:{
 		getNextCocktails(){
@@ -61,6 +44,7 @@ export default {
 				}
 			};
 		},
+
 		getMoreData(){
 			let i = this.dataToShow.length;
 			let imax = i+10;
@@ -73,7 +57,9 @@ export default {
 				}
 			}
 		},
+
 		async getApiData () {
+			const T = this
       const url = `${API_URL}/cocktails`
 			var myHeaders = new Headers();
 			myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -86,9 +72,17 @@ export default {
 
 			fetch(url, requestOptions)
 			.then(response => response.text())
-			.then(result => console.log(result))
+			.then(function(result) {
+				let data = JSON.parse(result).results
+				console.log(data)
+				data.forEach(element => {
+					T.data.push(element)
+					});
+					T.getMoreData();
+					T.getNextCocktails();
+				})
 			.catch(error => console.log('error', error));
-			}
+		}
 	}
 }
 </script>

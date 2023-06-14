@@ -7,7 +7,7 @@
 				<div id="contentPanel" class="textMenu"> 
 					<p v-show="$store.state.listeIngredients.length == 0">pas d'ingrédients !</p>
 					<ul v-show="$store.state.listeIngredients.length != 0">
-						<li v-for="ingredient in $store.state.listeIngredients" :key="ingredient.name"> {{ ingredient.name }} </li>
+						<li v-for="ingredient in $store.state.listeIngredients" :key="ingredient.nom"> {{ ingredient.nom }} </li>
 					</ul>
 				</div>
 				

@@ -24,12 +24,40 @@ import AjouteurInput from '@/components/Ajouteur.vue';
 export default {
 	name: "IngredientsView",
 	created(){
+		this.getApiData()
 		},
 	components:{SearchBar, IngredientCard, AjouteurInput},
 	data(){
 		return {
+			ing:{}
 		}
 	}, 
+	methods: {
+		async getApiData () {
+			const API_URL = 'http://127.0.0.1:8000'
+			const url = `${API_URL}/ingredients`
+			const T = this;
+			var myHeaders = new Headers();
+			myHeaders.append("Access-Control-Allow-Origin", "*");
+
+			var requestOptions = {
+			method: 'GET',
+			headers: myHeaders,
+			redirect: 'follow'
+			};
+
+			fetch(url, requestOptions)
+			.then(response => response.text())
+			.then(function(result) {
+				let data = JSON.parse(result).results
+				console.log(data)
+				data.forEach(element => {
+					T.$store.dispatch('addIngredient', element)
+					});
+				})
+			.catch(error => console.log('error', error));
+			}
+	}
 }
 </script>
 

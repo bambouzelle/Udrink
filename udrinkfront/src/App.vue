@@ -60,6 +60,9 @@ export default {
 </script>
 
 <style>
+body{
+  background-color:var(--main-white);
+}
 #app {
   font-family: "Golos Text", sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -100,6 +103,7 @@ nav a {
 .textMenu{
   color: var(--main-white);
   text-decoration: none;
+  max-height: 2em;
 }
 
 </style>

@@ -22,7 +22,6 @@ export default createStore({
 	},
 	mutations: {
 		addIngredient(state, ingredient) {
-			console.log('adddddddd inger')
 			state.listeIngredients.push(ingredient)
 		},
 		removeIngredient(state, ingredient) {

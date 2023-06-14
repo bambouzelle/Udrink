@@ -1,7 +1,7 @@
 <template>
 	<div class="card mb-3 px-0" style="max-width: 100%;">
 		<div class="row g-0">
-			<h5 class="card-header">{{ cocktail.title }}</h5>
+			<h5 class="card-header">{{ cocktail.nom }}</h5>
 		</div>
 		<div class="row g-0">
 			<div class="col-md-9">
@@ -48,7 +48,7 @@ export default {
 	},
 	computed: {
 		link(){
-				return (this.glassMap[this.cocktail.glass])
+				return (this.glassMap[this.cocktail.verre])
 		}
 	}
 }
