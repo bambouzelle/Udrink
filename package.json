@@ -1,6 +1,8 @@
 {
   "dependencies": {
     "ansi-html-community": "^0.0.8",
-    "html-entities": "^2.3.6"
+    "core-js": "^3.31.0",
+    "html-entities": "^2.3.6",
+    "html-webpack-plugin": "^5.5.3"
   }
 }
