@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<input class="searchBar" type="text" placeholder="Ingrédient..." v-model="searchQuery" />
+		<input class="searchBar" type="text" placeholder="Ingrédient..." v-model="searchQuery" @keyup="$emit('checkIng', searchQuery)"/>
 	</div>
 </template>
 

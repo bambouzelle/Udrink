@@ -17,36 +17,25 @@
 
 <script>
 import CocktailCard from "@/components/CocktailCard.vue"
+const API_URL = 'http://127.0.0.1:8000'
 
 export default {
 	components: { CocktailCard },
 	name: 'CocktailsView',
 	data() {
 		return {
-			data: [
-				{ id: 1, title: "Cocktail1", ingredients: ["I1", "I2"], description: "HOW TO DO IT", glass: "coupe" },
-				{ id: 2, title: "Cocktail2", ingredients: ["I1", "I2", "I3"], description: "HOW TO DO IT GOOF", glass: "ballon" },
-				{ id: 3, title: "Cocktail3", ingredients: ["I1", "I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "whiskey" },
-				{ id: 4, title: "Cocktail3", ingredients: ["I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "shooter" },
-				{ id: 5, title: "Cocktail3", ingredients: ["I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "biere" },
-				{ id: 1, title: "Cocktail1", ingredients: ["I1", "I2"], description: "HOW TO DO IT", glass: "coupe" },
-				{ id: 2, title: "Cocktail2", ingredients: ["I1", "I2", "I3"], description: "HOW TO DO IT GOOF", glass: "ballon" },
-				{ id: 3, title: "Cocktail3", ingredients: ["I1", "I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "whiskey" },
-				{ id: 4, title: "Cocktail3", ingredients: ["I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "shooter" },
-				{ id: 5, title: "Cocktail3", ingredients: ["I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "biere" },
-				{ id: 1, title: "Cocktail1", ingredients: ["I1", "I2"], description: "HOW TO DO IT", glass: "coupe" },
-				{ id: 2, title: "Cocktail2", ingredients: ["I1", "I2", "I3"], description: "HOW TO DO IT GOOF", glass: "ballon" },
-				{ id: 3, title: "Cocktail3", ingredients: ["I1", "I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "whiskey" },
-				{ id: 4, title: "Cocktail3", ingredients: ["I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "shooter" },
-				{ id: 5, title: "Cocktail3", ingredients: ["I2", "I3", "I4"], description: "HOW TO DO IT GOOFyyy", glass: "biere" }
-			],
+			data:[],
 			dataToShow:[],
+			ingredients:[],
 			noMore: false
 		}
 	},
 	mounted(){
+		//this.$store.dispatch('resetCocktails')
+		if (this.$store.state.listeCocktails.length == 0){
+					this.getApiData();
+		}
 		this.getMoreData();
-		this.getNextCocktails();
 	},
 	methods:{
 		getNextCocktails(){
@@ -59,17 +48,71 @@ export default {
 				}
 			};
 		},
+
 		getMoreData(){
 			let i = this.dataToShow.length;
 			let imax = i+10;
 			for ( i ; i<imax ; i++){
-				if (this.data[i]){
-					this.dataToShow.push(this.data[i])
+				if (this.$store.state.listeCocktails[i]){
+					this.dataToShow.push(this.$store.state.listeCocktails[i])
 				}
 				else{
 					this.noMore = true
 				}
 			}
+		},
+
+		async getIngredients (cocktail) {
+      const url = `${API_URL}/cocktails/${cocktail.id}/ingredients`;
+			var myHeaders = new Headers();
+			myHeaders.append("Access-Control-Allow-Origin", "*");
+
+			var requestOptions = {
+			method: 'GET',
+			headers: myHeaders,
+			redirect: 'follow'
+			};
+
+			let res = []
+			const response = await fetch(url, requestOptions)
+			const data = await response.json()
+			await data.ingredients.forEach(element => {
+				res.push(element.nom)
+			})
+			this.$store.state.listeCocktails.forEach(el => {
+				if (el.nom == cocktail.nom){
+					el.ingredients = res
+				}
+			})
+		},
+
+		async getApiData () {
+			await this.getCocktails();
+			await this.$store.state.listeCocktails.forEach(cocktail => {
+					this.getIngredients(cocktail)
+					cocktail.ingredients = this.ingredients
+
+			})
+		},
+
+		async getCocktails(){
+      const url = `${API_URL}/cocktails`
+			var myHeaders = new Headers();
+			myHeaders.append("Access-Control-Allow-Origin", "*");
+
+			var requestOptions = {
+			method: 'GET',
+			headers: myHeaders,
+			redirect: 'follow'
+			};
+
+			const response = await fetch(url, requestOptions)
+			const data = await response.json()
+			data.results.forEach(element => {
+					this.$store.dispatch('addCocktail', element)
+				});
+			this.getMoreData();
+			this.getNextCocktails();
 		}
 	}
 }

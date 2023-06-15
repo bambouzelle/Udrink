@@ -2,10 +2,13 @@ import { createStore } from 'vuex'
 
 export default createStore({
 	state: {
-		listeIngredients: []
+		listeIngredients: [],
+		listeIngredientsPerso: [],
+		listeCocktails: []
 	},
 	getters: {
-		all: state => { return state.listeIngredients },
+		allIngredients: state => { return state.listeIngredients },
+		allIngredientsPerso: state => { return state.listeIngredientsPerso },
 	},
 	actions: {
 		removeIngredient({ commit }, ingredient) {
@@ -19,10 +22,26 @@ export default createStore({
 		resetIngredients({ commit }) {
 			commit('resetIngredients')
 		},
+		removeIngredientPerso({ commit }, ingredient) {
+			commit('removeIngredientPerso', ingredient)
+		},
+
+		addIngredientPerso({ commit }, ingredient) {
+			commit('addIngredientPerso', ingredient)
+		},
+
+		resetIngredientsPerso({ commit }) {
+			commit('resetIngredientsPerso')
+		},
+		addCocktail({ commit }, cocktail) {
+			commit('addCocktail', cocktail)
+		},
+		resetCocktails({ commit }) {
+			commit('resetCocktails')
+		},
 	},
 	mutations: {
 		addIngredient(state, ingredient) {
-			console.log('adddddddd inger')
 			state.listeIngredients.push(ingredient)
 		},
 		removeIngredient(state, ingredient) {
@@ -34,6 +53,25 @@ export default createStore({
 
 		resetIngredients(state) {
 			state.listeIngredients = []
-		}
+		},
+		addIngredientPerso(state, ingredient) {
+			state.listeIngredientsPerso.push(ingredient)
+		},
+		removeIngredientPerso(state, ingredient) {
+			var index = state.listeIngredientsPerso.indexOf(ingredient);
+			if (index > -1) {
+				state.listeIngredientsPerso.splice(index, 1);
+			}
+		},
+
+		resetIngredientsPerso(state) {
+			state.listeIngredientsPerso = []
+		},
+		addCocktail(state, cocktail) {
+			state.listeCocktails.push(cocktail)
+		},
+		resetCocktails(state) {
+			state.listeCocktails = []
+		},
 	},
 })

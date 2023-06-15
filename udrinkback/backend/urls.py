@@ -1,8 +1,14 @@
 from django.urls import path
 from udrinkapp import views
-
+from rest_framework_simplejwt.views import (
+    TokenObtainPairView,
+    TokenRefreshView,
+)
 
 urlpatterns = [
+    path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
+    
     # URLs pour Ingredients
     path('ingredients/', views.ingredients_list_create, name='ingredients_list_create'),
     path('ingredients/<int:id>/', views.ingredient_retrieve_update_delete, name='ingredient_retrieve_update_delete'),

@@ -5,9 +5,9 @@
 			<div v-if="lateralBarShowed" class="lateralBar panelGrid">
 				<div id="titrePanel" class="textMenu">Mes ingrédients</div>
 				<div id="contentPanel" class="textMenu"> 
-					<p v-show="$store.state.listeIngredients.length == 0">pas d'ingrédients !</p>
-					<ul v-show="$store.state.listeIngredients.length != 0">
-						<li v-for="ingredient in $store.state.listeIngredients" :key="ingredient.name"> {{ ingredient.name }} </li>
+					<p v-show="$store.state.listeIngredientsPerso.length == 0">pas d'ingrédients !</p>
+					<ul v-show="$store.state.listeIngredientsPerso.length != 0">
+						<li v-for="ingredient in $store.state.listeIngredientsPerso" :key="ingredient.nom"> {{ ingredient.nom }} </li>
 					</ul>
 				</div>
 				

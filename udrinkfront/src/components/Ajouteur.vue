@@ -19,8 +19,9 @@ export default {
     addIngredient() {
       console.log('ingredinet added')
       if (this.name != "") {
-        let ingredient = { id: null, name: this.name, creation: 1 }
-        this.$store.dispatch('addIngredient', ingredient)
+        let nom = this.name.charAt(0).toUpperCase() + this.name.slice(1)
+        let ingredient = { id: null, nom: nom, creation: 1 }
+        this.$store.dispatch('addIngredientPerso', ingredient)
       }
       this.name = ''
     }
