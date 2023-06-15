@@ -1,10 +1,7 @@
-.DS_Store
-/dist
-auth_config.json
+
 
 # local env files
-.env.local
-.env.*.local
+
 
 # Log files
 npm-debug.log*
