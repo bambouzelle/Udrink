@@ -2,9 +2,9 @@
 <template>
 	<div class="container">
 		<div class="row">
-			<h1>Ingredients</h1>
+			<h1 style="margin-top: 1em;">Ingredients</h1>
 		</div>
-		<div class="row" style="margin-top:3em; margin-bottom: 3em;">
+		<div class="row" style="margin-top:2em; margin-bottom: 3em;">
 			<SearchBar v-on:checkIng="checkIngredient"/>
 		</div>
 		<div v-for="ingredient in filteredList" :key="ingredient">
@@ -55,7 +55,6 @@ export default {
 				.then(response => response.text())
 				.then(function (result) {
 					let data = JSON.parse(result).results
-					console.log(data)
 					data.forEach(element => {
 						T.$store.dispatch('addIngredient', element)
 					});

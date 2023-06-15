@@ -4,10 +4,11 @@ export default createStore({
 	state: {
 		listeIngredients: [],
 		listeIngredientsPerso: [],
+		listeCocktails: []
 	},
 	getters: {
 		allIngredients: state => { return state.listeIngredients },
-		allIngredientsPerso: state => { return state.listeIngredientsPerso }
+		allIngredientsPerso: state => { return state.listeIngredientsPerso },
 	},
 	actions: {
 		removeIngredient({ commit }, ingredient) {
@@ -31,6 +32,12 @@ export default createStore({
 
 		resetIngredientsPerso({ commit }) {
 			commit('resetIngredientsPerso')
+		},
+		addCocktail({ commit }, cocktail) {
+			commit('addCocktail', cocktail)
+		},
+		resetCocktails({ commit }) {
+			commit('resetCocktails')
 		},
 	},
 	mutations: {
@@ -59,6 +66,12 @@ export default createStore({
 
 		resetIngredientsPerso(state) {
 			state.listeIngredientsPerso = []
-		}
+		},
+		addCocktail(state, cocktail) {
+			state.listeCocktails.push(cocktail)
+		},
+		resetCocktails(state) {
+			state.listeCocktails = []
+		},
 	},
 })

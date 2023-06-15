@@ -209,14 +209,14 @@ def ingredient_cocktail_retrieve_update_delete(request, id):
 @csrf_exempt
 def ingredients_in_cocktails(request, cocktails_id):
     cocktails = get_object_or_404(Cocktails, pk=cocktails_id)
-    ingredients = Ingredients.objects.filter(ingredients_cocktails__cocktails_id=cocktails.id).values()
+    ingredients = Ingredients.objects.filter(ingredients_cocktails__cocktails=cocktails).values()
     data = {'cocktail': cocktails.nom, 'ingredients': list(ingredients)}
     return JsonResponse(data)
 
 @csrf_exempt
 def cocktails_in_ingredients(request, ingredients_id):
     ingredients = get_object_or_404(Ingredients, pk=ingredients_id)
-    cocktails = Cocktails.objects.filter(ingredients_cocktails__ingredients_id=ingredients.id).values()
+    cocktails = Cocktails.objects.filter(ingredients_cocktails__id_Ingredients=ingredients.id).values()
     data = {'ingredient': ingredients.nom, 'cocktail': list(cocktails)}
     return JsonResponse(data)
 

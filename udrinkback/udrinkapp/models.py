@@ -29,7 +29,7 @@ class Ingredients_Cocktails(models.Model):
         unique_together = (("cocktails", "ingredients"))
 
     def __str__(self):
-        return f"{self.id_Cocktails.nom} - {self.id_Ingredients.nom}"
+        return f"{self.cocktails.nom} - {self.ingredients.nom}"
 
 class Commentaires(models.Model):
     cocktails = models.ForeignKey(Cocktails, on_delete=models.CASCADE)

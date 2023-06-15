@@ -24,14 +24,18 @@ export default {
 	name: 'CocktailsView',
 	data() {
 		return {
-			data: [
-			],
+			data:[],
 			dataToShow:[],
+			ingredients:[],
 			noMore: false
 		}
 	},
 	mounted(){
-		this.getApiData();
+		//this.$store.dispatch('resetCocktails')
+		if (this.$store.state.listeCocktails.length == 0){
+					this.getApiData();
+		}
+		this.getMoreData();
 	},
 	methods:{
 		getNextCocktails(){
@@ -49,8 +53,8 @@ export default {
 			let i = this.dataToShow.length;
 			let imax = i+10;
 			for ( i ; i<imax ; i++){
-				if (this.data[i]){
-					this.dataToShow.push(this.data[i])
+				if (this.$store.state.listeCocktails[i]){
+					this.dataToShow.push(this.$store.state.listeCocktails[i])
 				}
 				else{
 					this.noMore = true
@@ -58,9 +62,8 @@ export default {
 			}
 		},
 
-		async getIngredients (id_cocktail) {
-			//const T = this
-      const url = `${API_URL}/cocktails/${id_cocktail}/ingredients`;
+		async getIngredients (cocktail) {
+      const url = `${API_URL}/cocktails/${cocktail.id}/ingredients`;
 			var myHeaders = new Headers();
 			myHeaders.append("Access-Control-Allow-Origin", "*");
 
@@ -70,22 +73,29 @@ export default {
 			redirect: 'follow'
 			};
 
-			fetch(url, requestOptions)
-			.then(response => response.text())
-			.then(function(result) {
-				//let data = JSON.parse(result)
-				console.log(result)
-				/*let in_arr = []
-				data.forEach(element => {
-					in_arr.push(element)
-				});
-				T.data.*/
+			let res = []
+			const response = await fetch(url, requestOptions)
+			const data = await response.json()
+			await data.ingredients.forEach(element => {
+				res.push(element.nom)
 			})
-			.catch(error => console.log('error', error));
+			this.$store.state.listeCocktails.forEach(el => {
+				if (el.nom == cocktail.nom){
+					el.ingredients = res
+				}
+			})
 		},
 
 		async getApiData () {
-			const T = this
+			await this.getCocktails();
+			await this.$store.state.listeCocktails.forEach(cocktail => {
+					this.getIngredients(cocktail)
+					cocktail.ingredients = this.ingredients
+
+			})
+		},
+
+		async getCocktails(){
       const url = `${API_URL}/cocktails`
 			var myHeaders = new Headers();
 			myHeaders.append("Access-Control-Allow-Origin", "*");
@@ -96,20 +106,13 @@ export default {
 			redirect: 'follow'
 			};
 
-			fetch(url, requestOptions)
-			.then(response => response.text())
-			.then(function(result) {
-				let data = JSON.parse(result).results
-				console.log(data)
-				data.forEach(element => {
-					console.log(element.id)
-					T.data.push(element)
-					//T.getIngredients( element.id); TODO corrigé ce retour 500
+			const response = await fetch(url, requestOptions)
+			const data = await response.json()
+			data.results.forEach(element => {
+					this.$store.dispatch('addCocktail', element)
 				});
-				T.getMoreData();
-				T.getNextCocktails();
-			})
-			.catch(error => console.log('error', error));
+			this.getMoreData();
+			this.getNextCocktails();
 		}
 	}
 }
