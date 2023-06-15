@@ -58,6 +58,32 @@ export default {
 			}
 		},
 
+		async getIngredients (id_cocktail) {
+			//const T = this
+      const url = `${API_URL}/cocktails/${id_cocktail}/ingredients`;
+			var myHeaders = new Headers();
+			myHeaders.append("Access-Control-Allow-Origin", "*");
+
+			var requestOptions = {
+			method: 'GET',
+			headers: myHeaders,
+			redirect: 'follow'
+			};
+
+			fetch(url, requestOptions)
+			.then(response => response.text())
+			.then(function(result) {
+				//let data = JSON.parse(result)
+				console.log(result)
+				/*let in_arr = []
+				data.forEach(element => {
+					in_arr.push(element)
+				});
+				T.data.*/
+			})
+			.catch(error => console.log('error', error));
+		},
+
 		async getApiData () {
 			const T = this
       const url = `${API_URL}/cocktails`
@@ -76,11 +102,13 @@ export default {
 				let data = JSON.parse(result).results
 				console.log(data)
 				data.forEach(element => {
+					console.log(element.id)
 					T.data.push(element)
-					});
-					T.getMoreData();
-					T.getNextCocktails();
-				})
+					//T.getIngredients( element.id); TODO corrigé ce retour 500
+				});
+				T.getMoreData();
+				T.getNextCocktails();
+			})
 			.catch(error => console.log('error', error));
 		}
 	}

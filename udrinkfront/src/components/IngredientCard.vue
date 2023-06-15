@@ -14,7 +14,8 @@
 			<div class="col-md-3">
 				<div class="card px-0 rounded-0 border-0">
 					<div class="card-body">
-						<button @click="removeIngredients()">-</button>
+						<button v-show="isInMyList" @click="removeIngredients()">-</button>
+						<button v-show="!isInMyList" @click="addIngredients()">+</button>
 					</div>
 				</div>
 			</div>
@@ -28,7 +29,21 @@ export default {
 	props:["ingredient"],
 	methods:{
 		removeIngredients(){
-			this.$store.dispatch('removeIngredient', this.ingredient)
+			this.$store.dispatch('removeIngredientPerso', this.ingredient)
+		},
+		addIngredients(){
+			this.$store.dispatch('addIngredientPerso', this.ingredient)
+		}
+	},
+	computed:{
+		isInMyList(){
+			let isInList = this.$store.state.listeIngredientsPerso.indexOf(this.ingredient);
+			if (isInList == -1) {
+				return false
+			}
+			else {
+				return true
+			}
 		}
 	}
 }

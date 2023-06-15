@@ -69,7 +69,6 @@ body{
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: var(--main-black);
-  background-color:var(--main-white);
 }
 
 #page{
@@ -92,6 +91,7 @@ body{
   grid-row-end: 3;
   grid-column-start: 2;
   grid-column-end: 3;
+  margin-top: 4em;
 }
 
 nav a {
